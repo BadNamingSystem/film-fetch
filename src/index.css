@@ -1,0 +1,581 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+:root {
+    /* Primary Colors - Neon Violet/Pink */
+    --color-primary: #8b5cf6; /* Violet */
+    --color-primary-light: #a78bfa;
+    --color-accent: #ec4899; /* Pink */
+    
+    /* Text Colors */
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-text-dark: #0f172a;
+
+    /* Background Colors - Solid Dark */
+    --color-bg-main: #0f172a; /* Deep Slate */
+    --color-bg-card: #1e293b; /* Lighter Slate */
+    --color-bg-hover: #334155;
+    
+    /* Functional Colors */
+    --color-red: #ef4444;
+    --color-red-dark: #b91c1c;
+    --color-gold: #f59e0b;
+    
+    /* Shadows */
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-glow: 0 0 15px rgba(139, 92, 246, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--color-text);
+    background-color: var(--color-bg-main);
+    min-height: 100vh;
+    padding: 2.4rem;
+}
+
+/* ******* */
+
+/* ******* */
+/* Navigation Bar - Glassmorphism */
+.nav-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    height: 7.2rem;
+    padding: 0 3.2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--backdrop-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 1.6rem;
+    margin-bottom: 2.4rem;
+}
+
+/* Main Layout */
+.main {
+    margin-top: 2.4rem;
+    height: calc(100vh - 7.2rem - 3 * 2.4rem);
+    display: flex;
+    gap: 2.4rem;
+    justify-content: center;
+}
+
+/* Box Component - Solid Theme */
+.box {
+    background-color: var(--color-bg-card);
+    border-radius: 1.2rem;
+    overflow: hidden;
+    overflow-y: auto;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-card);
+}
+
+/* Results Box - Grid Layout */
+.results-box {
+    flex: 1; /* Take up remaining space */
+    width: auto; /* Override fixed width */
+    max-width: none; /* Override max-width */
+}
+
+/* Details Box - Fixed Sidebar */
+.details-box {
+    width: 40rem;
+    min-width: 35rem;
+}
+
+/* Custom Scrollbar for Box */
+.box::-webkit-scrollbar {
+    width: 8px;
+}
+.box::-webkit-scrollbar-track {
+    background: transparent;
+}
+.box::-webkit-scrollbar-thumb {
+    background-color: var(--color-bg-hover);
+    border-radius: 20px;
+}
+.box::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
+}
+
+.loader {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 4.8rem;
+    color: var(--color-primary-light);
+    letter-spacing: 2px;
+}
+
+.error {
+    text-align: center;
+    font-size: 1.8rem;
+    padding: 4.8rem;
+    color: var(--color-red);
+}
+
+/* ******* */
+
+/* ******* */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.logo span {
+    font-size: 3.2rem;
+}
+
+.logo h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 1px;
+}
+
+.search {
+    justify-self: center;
+    border: 1px solid var(--glass-border);
+    padding: 1.1rem 1.6rem;
+    font-size: 1.6rem;
+    border-radius: 10rem; /* Pill shape */
+    width: 40rem;
+    transition: all 0.3s;
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.search::placeholder {
+    color: var(--color-text-muted);
+}
+
+.search:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.5); /* Glow effect */
+    border-color: var(--color-primary);
+    transform: scale(1.02);
+}
+
+.num-results {
+    justify-self: end;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.btn-toggle {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    height: 2.4rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--color-bg-darker);
+    color: var(--color-text);
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 999;
+    transition: all 0.3s;
+}
+.btn-toggle:hover {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+/* Movie List - Grid Transformation */
+.results-box .list-movies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 2rem;
+    padding: 2.4rem;
+}
+
+.results-box .list-movies li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.results-box .list-movies li:hover {
+    transform: translateY(-8px) scale(1.02);
+    background-color: var(--color-bg-hover);
+    box-shadow: var(--shadow-glow);
+    z-index: 10;
+}
+
+.results-box .list-movies img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 0.8rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow-card);
+}
+
+.results-box .list-movies h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-text);
+    padding: 0 1rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+}
+
+.results-box .list-movies div {
+    display: flex;
+    padding: 0 1rem 1.2rem 1rem;
+    gap: 1rem;
+}
+
+.results-box .list-movies p {
+    font-size: 1.4rem;
+    color: var(--color-text-muted);
+}
+
+/* Sidebar List (Watched) - Keep as List */
+.details-box .list li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 2.4rem;
+    font-size: 1.6rem;
+    align-items: center;
+    padding: 1.6rem 3.2rem;
+    border-bottom: 1px solid var(--color-bg-hover);
+    transition: all 0.2s;
+}
+
+.details-box .list li:hover {
+    background-color: var(--color-bg-hover);
+}
+
+.details-box .list img {
+    width: 100%;
+    grid-row: 1 / -1;
+    border-radius: 4px;
+}
+
+.details-box .list h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.details-box .list div {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+}
+
+.details-box .list p {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.btn-delete {
+    position: absolute;
+    right: 2.4rem;
+    height: 1.8rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--color-red);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0.7;
+}
+
+.btn-delete:hover {
+    background-color: var(--color-red-dark);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* ******* */
+
+/* Sidebar Summary */
+.summary {
+    padding: 2.2rem 3.2rem 1.8rem 3.2rem;
+    border-radius: 0; /* Remove radius to blend with box */
+    background-color: var(--color-bg-card);
+    box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--color-bg-hover);
+}
+
+.summary h2 {
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+    color: var(--color-primary-light);
+    letter-spacing: 1px;
+}
+
+.summary div {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.summary p {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+/* ******* */
+
+.details {
+    line-height: 1.4;
+    font-size: 1.4rem;
+}
+
+.details header {
+    display: flex;
+}
+
+.details section {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.details img {
+    width: 33%;
+}
+
+.details-overview {
+    width: 100%;
+    padding: 2.4rem 3rem;
+    background-color: var(--color-bg-hover); /* Darker overlay for header */
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.details-overview h2 {
+    font-size: 2.4rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+}
+
+.details-overview p {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.rating {
+    background-color: var(--color-bg-card);
+    border-radius: 0.9rem;
+    padding: 2rem 2.4rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    border: 1px solid var(--color-bg-hover);
+}
+
+.btn-add {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: #fff;
+    border: none;
+    border-radius: 10rem;
+    font-size: 1.4rem;
+    padding: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(236, 72, 153, 0.5);
+}
+
+.seconds {
+    background-color: var(--color-bg-hover);
+    width: 8rem;
+    border-radius: 10rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.4rem;
+    margin-top: 2.4rem;
+}
+
+.btn-back {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    height: 3.2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: none;
+    background-color: #fff;
+    color: var(--color-bg-main);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+    font-family: sans-serif;
+    font-size: 2.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.btn-back:hover {
+    transform: scale(1.1);
+}
+
+/*
+SPACING SYSTEM (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128
+
+FONT SIZE SYSTEM (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 /52 / 62 / 74 / 86 / 98
+*/
+
+/* MEDIA QUERIES */
+@media (max-width: 900px) {
+    .nav-bar {
+        grid-template-columns: 1fr auto 1fr;
+        padding: 0 2rem;
+    }
+    
+    .search {
+        width: 25rem;
+    }
+    
+    .details-box {
+        width: 35rem; /* Shrink sidebar slightly */
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-bar {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+        gap: 1.2rem;
+        padding: 1.6rem;
+    }
+
+    .logo {
+        justify-content: center;
+    }
+
+    .search {
+        width: 100%;
+        order: 3;
+    }
+
+    .num-results {
+        justify-self: center;
+    }
+
+    .main {
+        flex-direction: column;
+        align-items: stretch; /* Stretch to fill width */
+        height: auto;
+    }
+
+    .box {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .details-box {
+        width: 100%; /* Full width on mobile */
+    }
+    
+    .results-box .list-movies {
+        grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); /* Smaller cards on mobile */
+        padding: 1.6rem;
+        gap: 1.6rem;
+    }
+    
+    .details img {
+        width: 100%;
+        height: 30rem;
+        object-fit: cover;
+    }
+    
+    .details header {
+        flex-direction: column;
+    }
+    
+    .details-overview {
+        padding: 2rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.list li {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Stagger animation for list items (approximate) */
+.list li:nth-child(1) { animation-delay: 0.1s; }
+.list li:nth-child(2) { animation-delay: 0.15s; }
+.list li:nth-child(3) { animation-delay: 0.2s; }
+.list li:nth-child(4) { animation-delay: 0.25s; }
+.list li:nth-child(5) { animation-delay: 0.3s; }
+.list li:nth-child(6) { animation-delay: 0.35s; }
+.list li:nth-child(7) { animation-delay: 0.4s; }
+.list li:nth-child(8) { animation-delay: 0.45s; }
+.list li:nth-child(9) { animation-delay: 0.5s; }
+.list li:nth-child(10) { animation-delay: 0.55s; }
+
+
