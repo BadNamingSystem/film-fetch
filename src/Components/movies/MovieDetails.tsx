@@ -45,7 +45,7 @@ export default function MovieDetails({
       try {
         setIsLoading(true);
         const data = await getJSON(
-          `${API_URL}?&i=${selectedId}`,
+          `${API_URL}?i=${selectedId}`,
           "Failed to fetch movie details"
         );
         if (data.Response === "False") throw new Error("Something went wrong");

@@ -24,7 +24,7 @@ export default function useMovie(query: string, callback?: () => void) {
             try {
                 setIsLoading(true)
                 setError("")    // Clear any previous errors before fetching data
-                const data = await getJSON(`${API_URL}?&s=${debouncedQuery}`, "Failed to fetch movies")
+                const data = await getJSON(`${API_URL}?s=${debouncedQuery}`, "Failed to fetch movies")
                 if (data.Response === "False") throw new Error("Cannot find specified movie")
                 setMovies(data.Search)
             } catch (error) {
